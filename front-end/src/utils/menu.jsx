@@ -9,12 +9,12 @@ const {
 
 export const sidebarMenu = [
   {
-    path: "library",
+    path: "mymusic",
     text: "Thư viện",
     icon: <MdOutlineLibraryMusic size={24} />,
   },
   {
-    path: "explore",
+    path: "",
     text: "Khám phá",
     end: true,
     icon: <MdOutlineTravelExplore size={24} />,

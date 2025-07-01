@@ -1,9 +1,18 @@
-import { Home, Public, Login, Album } from "./containers/public/";
+import {
+  Home,
+  Public,
+  Login,
+  Album,
+  MyMusic,
+  WeekChart,
+} from "./containers/public/";
 import { Routes, Route } from "react-router-dom";
 import path from "./utils/path";
 import { useEffect } from "react";
 import * as action from "./store/actions";
 import { useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import { WeekRank } from "./components";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,13 +29,16 @@ function App() {
         <Routes>
           <Route path={path.PUBLIC} element={<Public />}>
             <Route path={path.HOME} element={<Home />} />
+            <Route path={path.MY_MUSIC} element={<MyMusic />} />
             <Route path={path.LOGIN} element={<Login />} />
-            <Route path={path.ALBUM} element={<Album />} />
+            <Route path={path.ALBUM__TITLE__PID} element={<Album />} />
+            <Route path={path.WEEKCHART__TITLE_PID} element={<WeekChart />} />
 
             <Route path={path.STAR} element={<Home />} />
           </Route>
         </Routes>
       </div>
+      <ToastContainer />
     </>
   );
 }

@@ -3,17 +3,32 @@ import {
   MdOutlineLibraryMusic,
   MdOutlineTravelExplore,
   MdSkipPrevious,
+  MdNavigateNext,
 } from "react-icons/md";
-import { RiLineChartLine } from "react-icons/ri";
+import { RiLineChartLine, RiRepeatOneFill } from "react-icons/ri";
 import { CgMusicSpeaker } from "react-icons/cg";
-import { GoArrowLeft, GoArrowRight } from "react-icons/go";
+import { GoArrowLeft, GoArrowRight, GoDotFill } from "react-icons/go";
 import { CiSearch, CiHeart, CiRepeat } from "react-icons/ci";
-import { BsPlayCircle } from "react-icons/bs";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import { PiShuffle } from "react-icons/pi";
+import { PiShuffle, PiDotsThreeBold, PiMicrophoneStage } from "react-icons/pi";
 import { IoMdPlay, IoIosPause } from "react-icons/io";
+import { BiSortAlt2 } from "react-icons/bi";
+import { BsMusicNoteList, BsVolumeUp } from "react-icons/bs";
+import { VscChromeRestore } from "react-icons/vsc";
+import {
+  LiaVolumeUpSolid,
+  LiaVolumeOffSolid,
+  LiaVolumeDownSolid,
+} from "react-icons/lia";
 
 const icons = {
+  BsVolumeUp,
+  LiaVolumeDownSolid,
+  LiaVolumeUpSolid,
+  LiaVolumeOffSolid,
+  VscChromeRestore,
+  PiMicrophoneStage,
+  BsMusicNoteList,
   MdOutlineLibraryMusic,
   MdOutlineTravelExplore,
   RiLineChartLine,
@@ -21,7 +36,6 @@ const icons = {
   GoArrowLeft,
   GoArrowRight,
   CiSearch,
-  BsPlayCircle,
   CiHeart,
   HiOutlineDotsHorizontal,
   PiShuffle,
@@ -30,6 +44,11 @@ const icons = {
   MdSkipPrevious,
   CiRepeat,
   IoIosPause,
+  BiSortAlt2,
+  GoDotFill,
+  PiDotsThreeBold,
+  MdNavigateNext,
+  RiRepeatOneFill,
 };
 
 export default icons;
