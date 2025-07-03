@@ -1,12 +1,27 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState, useRef } from "react";
 import { Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import SongItem from "./SongItem";
 import { useSelector } from "react-redux";
+import _ from "lodash";
+import { Link } from "react-router-dom";
+import path from "../utils/path";
+import icons from "../utils/icons";
+const { IoMdPlay } = icons;
 
 const ChartSection = () => {
   const { chart, rank } = useSelector((state) => state.app);
   const [data, setData] = useState(null);
+  const [selected, setSelected] = useState([]);
+  const chartRef = useRef();
+  const [toolTipState, setToolTipState] = useState({
+    opacity: 0,
+    top: 0,
+    left: 0,
+  });
+
+  // console.log(chart?.items?.[Object.keys(chart?.items)[0]]);
+
   const options = {
     responsive: true,
     pointRadius: 0,
@@ -26,6 +41,45 @@ const ChartSection = () => {
     },
     plugins: {
       legend: false,
+      tooltip: {
+        enabled: false,
+        external: ({ tooltip }) => {
+          // console.log(tooltip);
+
+          if (tooltip.opacity === 0) {
+            if (toolTipState.opacity !== 0) {
+              setToolTipState((prev) => ({ ...prev, opacity: 0 }));
+            }
+            return;
+          }
+
+          const newToolTipData = {
+            opacity: 1,
+            left: tooltip.caretX,
+            top: tooltip.caretY,
+          };
+
+          if (!_.isEqual(newToolTipData, toolTipState))
+            setToolTipState(newToolTipData);
+
+          const data = [];
+          for (let i = 0; i < 3; i++) {
+            data.push({
+              encodeId: Object.keys(chart?.items)[i],
+              data: chart?.items[Object.keys(chart?.items)[i]]
+                .filter((item) => item.hour % 2 === 0)
+                .map((item) => item.counter),
+            });
+          }
+          const getEncodeId = data.find((item) =>
+            item.data.some(
+              (item) =>
+                item === +tooltip?.body?.[0]?.lines?.[0].replace(",", "")
+            )
+          ).encodeId;
+          setSelected(getEncodeId);
+        },
+      },
     },
     hover: {
       mode: "dataset",
@@ -57,18 +111,24 @@ const ChartSection = () => {
         });
       }
     }
-    // console.log({ labels, datasets });
 
     setData({ labels, datasets });
   }, [chart]);
 
   return (
     <div className="w-full mt-[48px] min-h-[400px] bg-[#4E1E6E] relative rounded-lg">
-      <div className="absolute top-0 right-0 bottom-0 left-0 p-5">
-        <h3 className="font-bold text-white text-2xl mb-5">#zingchart</h3>
+      <div className="absolute top-0 right-0 bottom-0 left-0 p-5 flex flex-col gap-4">
+        <Link to={path.ZINGCHART}>
+          <div className="flex gap-2 items-center">
+            <h3 className="font-bold text-white text-2xl">#zingchart</h3>
+            <span className="p-1 bg-white rounded-full flex hover:bg-opacity-90">
+              <IoMdPlay size={12} />
+            </span>
+          </div>
+        </Link>
         <div className="flex gap-7 h-[250px]">
-          <div className="flex-4 flex flex-col gap-2">
-            <div className="flex flex-col gap-3 w-full h-full">
+          <div className="flex-4 flex flex-col gap-5">
+            <div className="flex flex-col gap-2 w-full h-full">
               {rank
                 ?.filter((_, index) => index <= 2)
                 ?.map((item, index) => (
@@ -78,20 +138,44 @@ const ChartSection = () => {
                     thumbnail={item.thumbnailM}
                     title={item.title}
                     artist={item.artistsNames}
-                    releaseDate={item.releaseDate}
                     order={index + 1}
-                    percent={item.score}
+                    percent={Math.ceil((item.score * 100) / chart?.totalScore)}
+                    style={"w-full bg-[hsla(0,0%,100%,.07)] hover:bg-[#6C4984]"}
                   />
                 ))}
             </div>
-            <div className="w-full flex justify-center">
-              <button className="px-6 py-1 border border-white text-white rounded-full text-[14px]">
+            <div className="w-fit flex justify-center m-auto">
+              <Link
+                to={path.ZINGCHART}
+                className="px-6 py-1 border border-white text-white rounded-full text-[14px] hover:bg-[#5A2E78]"
+              >
                 Xem thêm
-              </button>
+              </Link>
             </div>
           </div>
-          <div className="flex-6 border border-white h-full">
-            {data && <Line data={data} options={options} />}
+          <div className="flex-6 border border-white h-full relative">
+            {data && <Line ref={chartRef} data={data} options={options} />}
+            <div
+              // className="tooltip"
+              style={{
+                top: toolTipState.top,
+                left: toolTipState.left,
+                position: "absolute",
+                opacity: toolTipState.opacity,
+              }}
+            >
+              <SongItem
+                thumbnail={
+                  rank.find((item) => item.encodeId === selected)?.thumbnailM
+                }
+                title={rank.find((item) => item.encodeId === selected)?.title}
+                artist={
+                  rank.find((item) => item.encodeId === selected)?.artistsNames
+                }
+                sid={rank.find((item) => item.encodeId === selected)?.encodeId}
+                style={"bg-white"}
+              />
+            </div>
           </div>
         </div>
       </div>

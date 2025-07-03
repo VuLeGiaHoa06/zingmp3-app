@@ -16,18 +16,21 @@ const SongItem = ({
   releaseDate,
   order,
   percent,
+  style,
 }) => {
   const { isPlaying, curSongId } = useSelector((state) => state.music);
 
   const dispatch = useDispatch();
   return (
     <div
-      className={`${
-        order ? "w-full" : "w-[45%] min-[1024px]:w-[30%]"
-      } flex-auto flex p-2 justify-between items-center hover:bg-gray-100 group rounded-md`}
+      className={`flex-auto flex p-[10px] justify-between items-center group rounded-md ${style}`}
     >
-      <div className="flex gap-2 items-center">
-        {order && <span>{order}</span>}
+      <div className="flex gap-4 items-center">
+        {order && (
+          <span className={`text-[#5A2E78] text-3xl text-shadow-no${order}`}>
+            {order}
+          </span>
+        )}
         <div
           onClick={() => {
             dispatch(actions.setCurSongId(sid));
@@ -50,12 +53,16 @@ const SongItem = ({
             </span>
           </div>
         </div>
-        <div className="flex flex-col justify-between">
+        <div
+          className={`${
+            order && "text-[hsla(0,0%,100%,.5)]"
+          } flex flex-col justify-between `}
+        >
           <span className="text-[14px] font-medium">{title}</span>
-          <span className="text-[12px] text-gray-500">{artist}</span>
-          {order ? (
-            ""
-          ) : (
+          <span className="text-[12px]">{`${
+            artist?.length > 30 ? `${artist.slice(0, 30)}...` : artist
+          }`}</span>
+          {releaseDate && (
             <span className="text-[12px] text-gray-500">
               {moment(releaseDate * 1000).fromNow()}
             </span>
@@ -63,7 +70,7 @@ const SongItem = ({
         </div>
       </div>
       {percent ? (
-        <span>100%</span>
+        <span className="text-white text-[16px] font-semibold">{`${percent}%`}</span>
       ) : (
         <div className="hover:bg-gray-200 cursor-pointer p-2 rounded-full group-hover:opacity-100 opacity-0">
           <span>

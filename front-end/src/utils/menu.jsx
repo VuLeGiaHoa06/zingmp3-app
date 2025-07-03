@@ -20,7 +20,7 @@ export const sidebarMenu = [
     icon: <MdOutlineTravelExplore size={24} />,
   },
   {
-    path: "chart",
+    path: "zing-chart",
     text: "#zingchart",
     icon: <RiLineChartLine size={24} />,
   },

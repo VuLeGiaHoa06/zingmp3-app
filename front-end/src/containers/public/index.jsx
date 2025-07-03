@@ -4,4 +4,5 @@ export { default as Public } from "./Public";
 export { default as Album } from "./Album";
 export { default as MyMusic } from "./MyMusic";
 export { default as WeekChart } from "./WeekChart";
+export { default as ZingChart } from "./ZingChart";
 // => lấy export default từ file Home, Login, Public

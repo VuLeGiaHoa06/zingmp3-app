@@ -59,14 +59,16 @@ const NewRelease = ({ data }) => {
         {songs
           ?.filter((_, index) => index <= 11)
           .map((item) => (
-            <SongItem
-              key={item.encodeId}
-              sid={item.encodeId}
-              thumbnail={item.thumbnailM}
-              title={item.title}
-              artist={item.artistsNames}
-              releaseDate={item.releaseDate}
-            />
+            <div key={item.encodeId} className="w-[45%] min-[1024px]:w-[30%]">
+              <SongItem
+                sid={item.encodeId}
+                thumbnail={item.thumbnailM}
+                title={item.title}
+                artist={item.artistsNames}
+                releaseDate={item.releaseDate}
+                style={"hover:bg-gray-100"}
+              />
+            </div>
           ))}
       </div>
     </div>
