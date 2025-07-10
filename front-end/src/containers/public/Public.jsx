@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import {
   SidebarLeft,
   SidebarRight,
@@ -13,6 +13,8 @@ import { useSelector } from "react-redux";
 const Public = () => {
   const [isShowSidebarRight, setIsShowSidebarRight] = useState(false);
   const { isLoading } = useSelector((state) => state.music);
+  const { profile } = useParams();
+
   // console.log(isLoading);
 
   return (
@@ -21,8 +23,12 @@ const Public = () => {
         <div className="w-[240px] fixed h-full flex-none bg-main-200">
           <SidebarLeft />
         </div>
-        <div className="flex-auto ml-[240px] border border-red-400 flex flex-col relative">
-          <div className="w-full h-[70px] px-[59px] flex flex-none items-center justify-between">
+        <div className="flex-auto w-full ml-[240px] flex flex-col relative">
+          <div
+            className={`h-[70px] w-full px-[59px] flex flex-none items-center justify-between ${
+              profile ? "fixed top-0 left-[240px] r-[329px] z-10" : ""
+            }`}
+          >
             <Header />
           </div>
           <div className="flex-auto w-full">
@@ -38,9 +44,9 @@ const Public = () => {
         </div>
         {isShowSidebarRight && (
           <div
-            className={`w-[329px] ml-[240px] fixed right-0 top-0 bottom-0 flex-none bg-green-400 ${
+            className={`w-[329px] h-screen flex-none bg-main-100 ${
               isShowSidebarRight ? "animate-slide-left" : "animate-slide-right"
-            }`}
+            } shadow-2xl`}
           >
             <SidebarRight />
           </div>

@@ -1,51 +1,30 @@
 import moment from "moment";
 import { memo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import * as actions from "../store/actions";
-
-const notActiveStyle =
-  "flex w-full justify-between p-[10px] border-t border-b  hover:bg-gray-100 hover:rounded-md cursor-pointer";
-const activeStyle =
-  "flex w-full justify-between p-[10px] border-t border-b bg-gray-100 rounded-md";
+import { useSelector } from "react-redux";
+import { List } from "./";
 
 const Lists = ({ dataSong }) => {
-  const dispatch = useDispatch();
   const { curSongId, songs } = useSelector((state) => state.music);
+  console.log(songs);
 
   return (
-    <div className="flex  w-full flex-col ">
+    <div className="flex w-full flex-col ">
       {songs?.map((item, index) => (
         <div
           key={item.encodeId}
-          className={item.encodeId === curSongId ? activeStyle : notActiveStyle}
-          onClick={() => {
-            dispatch(actions.setCurSongId(item.encodeId));
-            dispatch(actions.play(true));
-          }}
+          className={
+            item.encodeId === curSongId ? "bg-gray-100 rounded-md" : ""
+          }
         >
-          <div className="flex gap-2 items-center">
-            <div className="mr-2 text-gray-500">{index + 1}</div>
-            <img
-              className="w-[40px] h-[40px] object-contain mr-1 rounded-md"
-              src={item.thumbnail}
-            />
-            <div className="font-semibold uppercase text-[14px] flex flex-col gap-1">
-              <span>{item.title}</span>
-              <div className="flex gap-1">
-                {item.artists.map((item) => (
-                  <div
-                    className="text-[11px] font-normal text-gray-400"
-                    key={item.id}
-                  >
-                    {item.name}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="text-[14px] text-gray-400">
-            {moment.utc(item.duration * 1000).format("mm:ss")}
-          </div>
+          <List
+            thumbnail={item.thumbnail}
+            title={item.title}
+            duration={item.duration}
+            order={index + 1}
+            sid={item.encodeId}
+            artistsNames={item.artistsNames}
+            album={item.album?.title}
+          />
         </div>
       ))}
       <div className="w-full p-[10px] ">

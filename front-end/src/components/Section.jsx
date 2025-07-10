@@ -1,31 +1,37 @@
 import React, { memo } from "react";
 import icons from "../utils/icons";
-import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
-// import * as actions from "../store/actions";
+import { Link, useNavigate } from "react-router-dom";
 
 const { MdNavigateNext, IoMdPlay, CiHeart, PiDotsThreeBold } = icons;
 
-const Section = ({ data }) => {
-  // const dispatch = useDispatch();
+const Section = ({ data, title, mountItem }) => {
   const navigate = useNavigate();
+  const number = mountItem || 4;
+  console.log(data);
 
   return (
-    <div className="mt-[48px] flex flex-col gap-4">
+    <div className="flex flex-col gap-4 mt-[10px]">
       <div className="flex justify-between items-center">
-        <h3 className="font-bold text-[20px]">{data.title}</h3>
-        <div className="flex items-center justify-center hover:text-primary cursor-pointer">
-          <span className="uppercase text-[12px]">tất cả</span>
-          <span>
-            <MdNavigateNext size={24} />
-          </span>
-        </div>
+        <h3 className="font-bold text-[20px]">{title}</h3>
+        {data?.length > 5 ? (
+          <div className="flex items-center justify-center hover:text-primary cursor-pointer">
+            <span className="uppercase text-[12px]">tất cả</span>
+            <span>
+              <MdNavigateNext size={24} />
+            </span>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
-      <div className="flex gap-4">
-        {data?.items
-          ?.filter((_, index) => index <= 4)
+      <div className="flex flex-wrap">
+        {data
+          ?.filter((_, index) => index <= number)
           .map((item) => (
-            <div key={item.encodeId} className="w-1/5  flex flex-col gap-4">
+            <div
+              key={item.encodeId}
+              className="w-[20%] px-4 flex flex-col gap-3"
+            >
               <div
                 onClick={() =>
                   navigate(
@@ -66,12 +72,22 @@ const Section = ({ data }) => {
                 </div>
               </div>
               <div className="text-[14px]">
-                <h3 className="font-bold">{`${item.title.slice(0, 25)}...`}</h3>
+                <h3 className="font-bold">{`${
+                  item.title.length > 25
+                    ? `${item.title.slice(0, 25)}...`
+                    : `${item.title}`
+                }`}</h3>
                 <span className="text-gray-500">
                   {`${item?.artists
-                    ?.map((item) => item.name)
-                    .join(", ")
-                    .slice(0, 50)}...`}
+                    ?.map(
+                      (item) =>
+                        `${
+                          item.name.length > 50
+                            ? `${item.name.slice(0, 50)}...`
+                            : item.name
+                        }`
+                    )
+                    .join(", ")}`}
                 </span>
               </div>
             </div>

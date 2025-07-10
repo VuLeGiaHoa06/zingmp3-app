@@ -12,7 +12,7 @@ import { CiSearch, CiHeart, CiRepeat } from "react-icons/ci";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { PiShuffle, PiDotsThreeBold, PiMicrophoneStage } from "react-icons/pi";
 import { IoMdPlay, IoIosPause } from "react-icons/io";
-import { BiSortAlt2 } from "react-icons/bi";
+import { BiSortAlt2, BiTrash } from "react-icons/bi";
 import { BsMusicNoteList, BsVolumeUp } from "react-icons/bs";
 import { VscChromeRestore } from "react-icons/vsc";
 import {
@@ -20,8 +20,12 @@ import {
   LiaVolumeOffSolid,
   LiaVolumeDownSolid,
 } from "react-icons/lia";
+import { IoPersonAdd, IoCloseSharp } from "react-icons/io5";
 
 const icons = {
+  IoPersonAdd,
+  IoCloseSharp,
+  BiTrash,
   BsVolumeUp,
   LiaVolumeDownSolid,
   LiaVolumeUpSolid,

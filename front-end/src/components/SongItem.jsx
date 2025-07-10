@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions";
 import { LoadingAudio } from "./";
 
-const { IoMdPlay, PiDotsThreeBold } = icons;
+const { IoMdPlay, PiDotsThreeBold, CiHeart } = icons;
 
 const SongItem = ({
   thumbnail,
@@ -17,13 +17,17 @@ const SongItem = ({
   order,
   percent,
   style,
+  sizeImg,
+  isActive,
 }) => {
   const { isPlaying, curSongId } = useSelector((state) => state.music);
 
   const dispatch = useDispatch();
   return (
     <div
-      className={`flex-auto flex p-[10px] justify-between items-center group rounded-md ${style}`}
+      className={`flex-auto flex p-[10px] justify-between items-center group rounded-md ${style} ${
+        isActive && "bg-primary text-white"
+      }`}
     >
       <div className="flex gap-4 items-center">
         {order && (
@@ -39,7 +43,7 @@ const SongItem = ({
           className="relative"
         >
           <img
-            className="w-[60px] h-[60px] rounded-md"
+            className={`${sizeImg || "w-[60px] h-[60px]"} rounded-md`}
             src={thumbnail}
             alt={title}
           />
@@ -58,9 +62,15 @@ const SongItem = ({
             order && "text-[hsla(0,0%,100%,.5)]"
           } flex flex-col justify-between `}
         >
-          <span className="text-[14px] font-medium">{title}</span>
-          <span className="text-[12px]">{`${
-            artist?.length > 30 ? `${artist.slice(0, 30)}...` : artist
+          <span className="text-[14px] font-medium">{`${
+            title?.length > 15 ? `${title.slice(0, 15)}...` : title
+          }`}</span>
+          <span
+            className={`${
+              isActive ? "text-gray-200" : "text-gray-500"
+            } text-[12px] `}
+          >{`${
+            artist?.length > 20 ? `${artist.slice(0, 20)}...` : artist
           }`}</span>
           {releaseDate && (
             <span className="text-[12px] text-gray-500">
@@ -72,8 +82,23 @@ const SongItem = ({
       {percent ? (
         <span className="text-white text-[16px] font-semibold">{`${percent}%`}</span>
       ) : (
-        <div className="hover:bg-gray-200 cursor-pointer p-2 rounded-full group-hover:opacity-100 opacity-0">
-          <span>
+        <div className="flex gap-3">
+          <span
+            className={`${
+              isActive
+                ? "hover:bg-[#8620B9]"
+                : "hover:bg-gray-200 group-hover:opacity-100 opacity-0"
+            }  cursor-pointer p-2 rounded-full flex`}
+          >
+            <CiHeart size={20} />
+          </span>
+          <span
+            className={`${
+              isActive
+                ? "hover:bg-[#8620B9]"
+                : "hover:bg-gray-200 group-hover:opacity-100 opacity-0"
+            }  cursor-pointer p-2 rounded-full flex`}
+          >
             <PiDotsThreeBold size={20} />
           </span>
         </div>

@@ -53,6 +53,7 @@ const Player = ({ setIsShowSidebarRight, isShowSidebarRight }) => {
       setLoadingSpinner(true);
       if (res1?.data.err === 0) {
         setSongInfo(res1.data.data);
+        dispatch(actions.setCurSongData(res1.data.data));
       }
       if (res2?.data.err === 0) {
         setAudio(new Audio(res2.data.data["128"]));

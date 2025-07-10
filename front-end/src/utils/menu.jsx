@@ -30,3 +30,23 @@ export const sidebarMenu = [
     icon: <CgMusicSpeaker size={24} />,
   },
 ];
+
+export const searchMenu = [
+  { path: "tat-ca", text: "Tất cả" },
+  {
+    path: "bai-hat",
+    text: "Bài hát",
+  },
+  {
+    path: "playlist",
+    text: "Playlist/Album",
+  },
+  {
+    path: "artist",
+    text: "Nghệ sĩ/OA",
+  },
+  {
+    path: "video",
+    text: "MV",
+  },
+];

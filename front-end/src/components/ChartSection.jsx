@@ -116,11 +116,13 @@ const ChartSection = () => {
   }, [chart]);
 
   return (
-    <div className="w-full mt-[48px] min-h-[400px] bg-[#4E1E6E] relative rounded-lg">
+    <div className="w-full  min-h-[400px] bg-[#4E1E6E] relative rounded-lg">
       <div className="absolute top-0 right-0 bottom-0 left-0 p-5 flex flex-col gap-4">
         <Link to={path.ZINGCHART}>
           <div className="flex gap-2 items-center">
-            <h3 className="font-bold text-white text-2xl">#zingchart</h3>
+            <h3 className="inline-block text-transparent bg-clip-text font-bold text-white text-2xl bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+              #zingchart
+            </h3>
             <span className="p-1 bg-white rounded-full flex hover:bg-opacity-90">
               <IoMdPlay size={12} />
             </span>

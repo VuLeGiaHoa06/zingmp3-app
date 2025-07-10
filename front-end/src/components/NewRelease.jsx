@@ -19,8 +19,8 @@ const NewRelease = ({ data }) => {
   }, [isActive, data]);
 
   return (
-    <div className="flex flex-col gap-4 mt-[48px] w-full">
-      <h3 className="font-bold text-[20px]">{data.title}</h3>
+    <div className="flex flex-col gap-4 w-full">
+      <h3 className="font-bold text-[20px]">{data?.title}</h3>
       <div className="flex justify-between items-center">
         <div className="flex gap-4 items-center justify-center cursor-pointer">
           <button

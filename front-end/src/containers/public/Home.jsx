@@ -1,6 +1,6 @@
 import {
   Section,
-  Slider,
+  Banner,
   NewRelease,
   WeekRank,
   ChartSection,
@@ -13,16 +13,14 @@ const Home = () => {
   );
 
   return (
-    <div className="flex flex-col gap-7 mt-10">
-      <div className="w-full px-[59px]">
-        <Slider data={banner} />
-        <Section data={top100} />
-        <Section data={newMusic} />
-        <NewRelease data={newRelease} />
-        <ChartSection />
-        <WeekRank data={weekChart} />
-        <div className="w-ful h-[500px]"></div>
-      </div>
+    <div className="flex flex-col gap-8 mt-10 w-full px-[59px]">
+      <Banner data={banner} />
+      <Section data={top100.items} title={top100?.title} />
+      <Section data={newMusic.items} title={newMusic?.title} />
+      <NewRelease data={newRelease} />
+      <ChartSection />
+      <WeekRank data={weekChart} />
+      <div className="w-ful h-[500px]"></div>
     </div>
   );
 };

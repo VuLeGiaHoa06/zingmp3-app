@@ -6,6 +6,11 @@ import {
   MyMusic,
   WeekChart,
   ZingChart,
+  Search,
+  Profile,
+  SearchAll,
+  SearchSong,
+  SearchPlaylist,
 } from "./containers/public/";
 import { Routes, Route } from "react-router-dom";
 import path from "./utils/path";
@@ -17,8 +22,8 @@ import { ToastContainer } from "react-toastify";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    const fetchData = async function () {
-      const res = await action.getHome();
+    const fetchData = function () {
+      const res = action.getHome();
       res(dispatch);
     };
     fetchData();
@@ -33,6 +38,12 @@ function App() {
           <Route path={path.ALBUM__TITLE__PID} element={<Album />} />
           <Route path={path.WEEKCHART__TITLE_PID} element={<WeekChart />} />
           <Route path={path.ZINGCHART} element={<ZingChart />} />
+          <Route path={path.PROFILE} element={<Profile />} />
+          <Route path={path.SEARCH} element={<Search />}>
+            <Route path={path.ALL} element={<SearchAll />} />
+            <Route path={path.SONG} element={<SearchSong />} />
+            <Route path={path.PLAYLIST} element={<SearchPlaylist />} />
+          </Route>
 
           <Route path={path.STAR} element={<Home />} />
         </Route>

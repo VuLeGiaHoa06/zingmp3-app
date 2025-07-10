@@ -18,8 +18,11 @@ const Album = () => {
   const { isPlaying } = useSelector((state) => state.music);
 
   const [dataSong, setDataSong] = useState(null);
+  // console.log(dataSong);
 
   useEffect(() => {
+    dispatch(actions.setCurAlbumId(pid));
+
     const fetchData = async () => {
       dispatch(actions.loading(false));
       const res = await apis.apiGetDetailPlaylist(pid);
@@ -28,13 +31,14 @@ const Album = () => {
       if (res?.data.err === 0) {
         setDataSong(res.data.data);
         dispatch(actions.playList(res.data.data.song.items));
+        // dispatch(actions.curSongData(res.data.data));
       }
     };
     fetchData();
   }, [pid]);
 
   useEffect(() => {
-    console.log(location.state);
+    // console.log(location.state);
 
     if (location.state?.playAlbum) {
       const randomSong = Math.round(
@@ -50,14 +54,18 @@ const Album = () => {
 
   return (
     <div className="flex gap-8 px-[59px] justify-between w-full overflow-y-scroll">
-      <div className="border border-red-500 w-1/4 flex flex-col items-center gap-4">
-        <div className="w-full rounded-lg shadow-lg overflow-hidden relative cursor-pointer group">
+      <div className="w-[25%] flex flex-col items-center gap-4">
+        <div
+          className={`w-[300px] h-[300px] shadow-lg overflow-hidden relative cursor-pointer group ${
+            isPlaying ? "rounded-full" : "rounded-lg"
+          }`}
+        >
           <img
             className={`${
               isPlaying
                 ? "rounded-full animate-rotate-center"
                 : "animate-rotate-center-pause rounded-md"
-            } w-full object-cover shadow-lg group-hover:scale-110 transition-transform duration-300`}
+            } w-full h-full object-contain shadow-lg group-hover:scale-110 transition-transform duration-300`}
             src={dataSong?.thumbnailM}
             alt={dataSong?.title}
           />
@@ -114,23 +122,37 @@ const Album = () => {
           </span>
         </div>
       </div>
-      <div className="border border-blue-500 flex-auto">
-        <div className="flex justify-between p-[10px]">
-          <div className="flex items-center gap-2">
-            <span className="text-gray-500">
-              {dataSong?.song.total > 1 ? <BiSortAlt2 size={12} /> : ""}
-            </span>
-            <span className="text-gray-500 text-[12px] uppercase font-medium">
-              Bài hát
+      <div className="flex flex-col gap-2 w-[75%]">
+        {dataSong?.description && (
+          <div className="flex">
+            <span>
+              <span className="mr-1 text-gray-700">Lời tựa</span>
+              {dataSong?.description}
             </span>
           </div>
-          <div className="text-gray-500 text-[12px] uppercase font-medium">
-            Thời gian
+        )}
+
+        <div className="flex flex-col h-full">
+          <div className="flex justify-between p-[10px]">
+            <div className="flex items-center gap-2">
+              <span className="text-gray-500">
+                {dataSong?.song.total > 1 ? <BiSortAlt2 size={12} /> : ""}
+              </span>
+              <span className="text-gray-500 text-[12px] uppercase font-medium">
+                Bài hát
+              </span>
+            </div>
+            <div className="text-gray-500 text-[12px] uppercase font-medium">
+              Album
+            </div>
+            <div className="text-gray-500 text-[12px] uppercase font-medium">
+              Thời gian
+            </div>
           </div>
+          <Scrollbars autoHide style={{ width: "100%", height: "80%" }}>
+            <Lists dataSong={dataSong} />
+          </Scrollbars>
         </div>
-        <Scrollbars autoHide style={{ width: "100%", height: "80%" }}>
-          <Lists dataSong={dataSong} />
-        </Scrollbars>
       </div>
     </div>
   );
