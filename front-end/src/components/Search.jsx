@@ -4,17 +4,16 @@ const { CiSearch, IoCloseSharp } = icons;
 import { useState, useRef } from "react";
 // import * as apis from "../apis";
 import path from "../utils/path";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions";
 
 const Search = () => {
   const navigate = useNavigate();
   const inputRef = useRef();
   const [keyword, setKeyword] = useState("");
-  const { profile } = useParams();
-
-  // const [dataSearch, setDataSearch] = useState(null);
   const dispatch = useDispatch();
+  const { scroll } = useSelector((state) => state.app);
+  const { profile } = useParams;
 
   const handleSearch = (e) => {
     if (e.code === "Enter") {
@@ -31,12 +30,12 @@ const Search = () => {
   return (
     <div
       className={`w-[440px] h-[40px] flex items-center gap-5  rounded-3xl px-3 ${
-        profile ? "bg-[#2F3133]" : "bg-[#F2F2F2]"
+        scroll && profile ? "bg-[#2F3133]" : "bg-[#F2F2F2]"
       }`}
     >
       <span
         className={`cursor-pointer text-[#757575] ${
-          profile ? "text-white" : ""
+          scroll && profile ? "text-white" : "text-[#2F3133]"
         }`}
       >
         <CiSearch size={24} />
@@ -44,7 +43,9 @@ const Search = () => {
       <input
         ref={inputRef}
         className={`w-full outline-none bg-inherit   ${
-          profile ? "placeholder:text-white text-white" : ""
+          scroll && profile
+            ? "placeholder:text-white text-white"
+            : "text-[#2F3133]"
         }`}
         type="text"
         placeholder="Tìm kiếm bài hát, nghệ sĩ, lời bài hát..."

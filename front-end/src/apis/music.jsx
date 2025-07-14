@@ -88,3 +88,17 @@ export const apiGetAritst = (name) =>
       reject(error);
     }
   });
+
+export const apiGetChartHome = () =>
+  // eslint-disable-next-line no-async-promise-executor
+  new Promise(async (resolve, reject) => {
+    try {
+      const res = await axios({
+        url: "/charthome",
+        method: "get",
+      });
+      resolve(res);
+    } catch (error) {
+      reject(error);
+    }
+  });

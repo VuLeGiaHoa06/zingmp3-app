@@ -88,6 +88,8 @@ const ChartSection = () => {
   };
 
   useEffect(() => {
+    // console.log(chart?.times);
+
     const labels = chart?.times
       ?.filter((item) => item.hour % 2 === 0)
       ?.map((item) => `${item.hour}:00`);
@@ -120,7 +122,7 @@ const ChartSection = () => {
       <div className="absolute top-0 right-0 bottom-0 left-0 p-5 flex flex-col gap-4">
         <Link to={path.ZINGCHART}>
           <div className="flex gap-2 items-center">
-            <h3 className="inline-block text-transparent bg-clip-text font-bold text-white text-2xl bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+            <h3 className="inline-block text-transparent bg-clip-text font-bold text-2xl bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
               #zingchart
             </h3>
             <span className="p-1 bg-white rounded-full flex hover:bg-opacity-90">

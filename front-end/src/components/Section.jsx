@@ -7,7 +7,7 @@ const { MdNavigateNext, IoMdPlay, CiHeart, PiDotsThreeBold } = icons;
 const Section = ({ data, title, mountItem }) => {
   const navigate = useNavigate();
   const number = mountItem || 4;
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="flex flex-col gap-4 mt-[10px]">

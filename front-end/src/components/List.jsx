@@ -2,6 +2,8 @@ import moment from "moment";
 import React, { memo } from "react";
 import { useDispatch } from "react-redux";
 import * as actions from "../store/actions";
+import icons from "../utils/icons";
+const { CiMusicNote1 } = icons;
 
 const List = ({
   thumbnail,
@@ -27,17 +29,35 @@ const List = ({
           })
         );
       }}
-      className="flex justify-between w-full items-center cursor-pointer border-b hover:bg-gray-100 h-full p-2 rounded-l-md rounded-r-md "
+      className="flex justify-between w-full items-center cursor-pointer border-b hover:bg-gray-100 p-2 rounded-l-md rounded-r-md "
     >
       <div className="flex w-[48%] gap-2 items-center">
-        {order && <div className="mr-2 text-gray-500">{order}</div>}
+        {order ? (
+          <span
+            className={`text-white text-3xl ${
+              order === 1
+                ? `text-shadow-no${order}`
+                : order === 2
+                ? `text-shadow-no${order}`
+                : order === 3
+                ? `text-shadow-no${order}`
+                : `text-shadow-rest`
+            } w-[10%] flex items-center justify-center`}
+          >
+            {order}
+          </span>
+        ) : (
+          <span className="mr-2 text-gray-500">
+            <CiMusicNote1 size={16} />
+          </span>
+        )}
         <img
           className="w-[40px] h-[40px] object-contain mr-1 rounded-md"
           src={thumbnail}
         />
         <div className="flex flex-col gap-1">
           <span className="text-[14px] font-semibold">{`${
-            title.length > 30 ? `${title.slice(0, 30)}...` : `${title}`
+            title?.length > 30 ? `${title.slice(0, 30)}...` : `${title}`
           }`}</span>
           <div className="text-[12px] font-normal text-gray-400">
             {artistsNames}

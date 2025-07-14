@@ -20,3 +20,8 @@ export const getHome = () => async (dispatch) => {
     console.log(err);
   }
 };
+
+export const setScroll = (flag) => ({
+  type: actionTypes.SCROLL,
+  flag,
+});

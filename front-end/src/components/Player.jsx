@@ -32,6 +32,7 @@ const Player = ({ setIsShowSidebarRight, isShowSidebarRight }) => {
   const intervalId = useRef();
   const progressBar = useRef(0);
   const trackMousePosition = useRef();
+  const volumeRef = useRef();
 
   const [songInfo, setSongInfo] = useState(null);
   const [audio, setAudio] = useState(new Audio());
@@ -42,6 +43,7 @@ const Player = ({ setIsShowSidebarRight, isShowSidebarRight }) => {
   const [isVolume, setIsVolume] = useState(true);
   const [volume, setVolume] = useState(70);
   const [curIndexSong, setCurIndexSong] = useState(0);
+  const [isHoverVolume, setIsHoverVolume] = useState(false);
 
   useEffect(() => {
     const fetchData = async function () {
@@ -101,6 +103,7 @@ const Player = ({ setIsShowSidebarRight, isShowSidebarRight }) => {
       clearInterval(intervalId.current);
     };
   }, [isPlaying, audio]);
+  console.log(volumeRef.current);
 
   useEffect(() => {
     const handleEnded = () => {
@@ -122,8 +125,15 @@ const Player = ({ setIsShowSidebarRight, isShowSidebarRight }) => {
   }, [audio, isShuffle, repeatMode]);
 
   useEffect(() => {
-    audio.volume = +volume / 100;
-  }, [volume]);
+    if (audio.volume) {
+      audio.volume = +volume / 100;
+    }
+    console.log(volumeRef.current);
+
+    if (volumeRef.current) {
+      volumeRef.current.style.cssText = `right: ${100 - volume}%`;
+    }
+  }, [volume, isHoverVolume]);
 
   const handleTogglePlayMusic = () => {
     if (isPlaying) {
@@ -296,8 +306,8 @@ const Player = ({ setIsShowSidebarRight, isShowSidebarRight }) => {
           </span>
         </div>
       </div>
-      <div className="w-[30%] h-full flex items-center gap-6 justify-end">
-        <div className="flex gap-4 text-gray-600">
+      <div className="w-[30%] hidden h-full min-[1030px]:flex items-center gap-6 justify-end">
+        <div className="flex gap-4 text-gray-600 items-center">
           <span>
             <PiMicrophoneStage size={16} />
           </span>
@@ -318,13 +328,29 @@ const Player = ({ setIsShowSidebarRight, isShowSidebarRight }) => {
                 <LiaVolumeDownSolid size={16} />
               )}
             </span>
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={volume}
-              onChange={handleChangeVolume}
-            />
+            <div
+              className="w-[130px]"
+              onMouseEnter={() => setIsHoverVolume(true)}
+              onMouseLeave={() => setIsHoverVolume(false)}
+            >
+              {isHoverVolume ? (
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  value={volume}
+                  onChange={handleChangeVolume}
+                  className="w-full"
+                />
+              ) : (
+                <div className="w-full h-[5px] bg-gray-200 rounded-l-full rounded-r-full relative">
+                  <div
+                    ref={volumeRef}
+                    className="absolute top-0 bottom-0 left-0 right-1/2 bg-primary rounded-l-full rounded-r-full"
+                  ></div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="border-l-[2px] h-[33px] border-gray-100"></div>

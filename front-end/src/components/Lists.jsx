@@ -9,7 +9,7 @@ const Lists = ({ dataSong }) => {
 
   return (
     <div className="flex w-full flex-col ">
-      {songs?.map((item, index) => (
+      {songs?.map((item) => (
         <div
           key={item.encodeId}
           className={
@@ -20,7 +20,6 @@ const Lists = ({ dataSong }) => {
             thumbnail={item.thumbnail}
             title={item.title}
             duration={item.duration}
-            order={index + 1}
             sid={item.encodeId}
             artistsNames={item.artistsNames}
             album={item.album?.title}

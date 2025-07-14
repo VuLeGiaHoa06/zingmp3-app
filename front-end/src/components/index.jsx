@@ -12,9 +12,8 @@ export { default as SongItem } from "./SongItem";
 export { default as WeekRank } from "./WeekRank";
 export { default as ChartSection } from "./ChartSection";
 export { default as Artists } from "./Artists";
+export { default as WeekChartBox } from "./WeekChartBox";
 
 export { default as LoadingAudio } from "./LoadingAudio";
 export { default as LoadingSpinner } from "./LoadingSpinner";
 export { default as LoadingDots } from "./LoadingDots";
-
-export { default as Button } from "./Button";

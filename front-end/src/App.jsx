@@ -23,11 +23,11 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = function () {
-      const res = action.getHome();
-      res(dispatch);
+      dispatch(action.getHome());
     };
     fetchData();
   }, []);
+
   return (
     <>
       <Routes>
